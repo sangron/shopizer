@@ -1859,6 +1859,26 @@
 		"countryCode": "ES"
 	},
 	{
+		"zoneCode": "FN",
+		"zoneName": "Frontera Norte",
+		"countryCode": "MX"
+	},
+	{
+		"zoneCode": "PC",
+		"zoneName": "Costa del Pacifico",
+		"countryCode": "MX"
+	},
+	{
+		"zoneCode": "VM",
+		"zoneName": "Valle de Mexico",
+		"countryCode": "MX"
+	},
+	{
+		"zoneCode": "CAN",
+		"zoneName": "Peninsula de Yucatan",
+		"countryCode": "MX"
+	},
+	{
 		"zoneCode":"ACT",
 		"zoneName":"Territoire de la capitale australienne",
 		"countryCode":"AU"

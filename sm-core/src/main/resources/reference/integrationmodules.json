@@ -21,7 +21,7 @@
 		"module": "SHIPPING",
 		"code": "ups",
 		"version":"",
-		"regions": ["US","CA","FR","GB"],
+		"regions": ["US","CA","FR","GB","MX"],
 		"image":"ups.jpg",
 		"configuration":[{"env":"TEST","scheme":"https","host":"wwwcie.ups.com","port":"443","uri":"/ups.app/xml/Rate"},{"env":"PROD","scheme":"https","host":"onlinetools.ups.com","port":"443","uri":"/xml/Rate"}],
 		"details":{"01":"UPS Next Day Air","02":"UPS Second Day Air","03":"UPS Ground","07":"UPS Worldwide Express","08":"UPS Worldwide Expedited","11":"UPS Standard","12":"UPS Three-Day Select","13":"UPS Next Day Air Saver","14":"UPS Next Day Air Early A.M.","54":"UPS Worldwide Express Plus","59":"UPS Second Day Air A.M.","69":"UPS Saver"}
@@ -77,7 +77,7 @@
 		"code": "beanstream",
 		"type":"creditcard",
 		"version":"",
-		"regions": ["US","CA","GB"],
+		"regions": ["US","CA","GB","MX"],
 		"image":"beanstream.gif",
 		"configuration":[{"env":"TEST","scheme":"https","host":"www.beanstream.com","port":"443","uri":"/scripts/process_transaction.asp"},{"env":"PROD","scheme":"https","host":"www.beanstream.com","port":"443","uri":"/scripts/process_transaction.asp"}]
 
@@ -89,7 +89,7 @@
 		"code": "stripe",
 		"type":"creditcard",
 		"version":"",
-		"regions": ["US","CA","GB","AU","FI","DK","IE","NO","SE","ES","PT"],
+		"regions": ["US","CA","GB","AU","FI","DK","IE","NO","SE","ES","PT","MX"],
 		"image":"stripe.png",
 		"configuration":[{"env":"TEST","scheme":"https","host":"www.stripe.com","port":"443","uri":"/"},{"env":"PROD","scheme":"https","host":"www.stripe.com","port":"443","uri":"/"}]
 
@@ -100,7 +100,7 @@
 		"code": "stripe3",
 		"type":"creditcard",
 		"version":"",
-		"regions": ["US","CA","GB","AU","FI","DK","IE","NO","SE","ES","PT"],
+		"regions": ["US","CA","GB","AU","FI","DK","IE","NO","SE","ES","PT","MX"],
 		"image":"stripe.png",
 		"configuration":[{"env":"TEST","scheme":"https","host":"www.stripe.com","port":"443","uri":"/"},{"env":"PROD","scheme":"https","host":"www.stripe.com","port":"443","uri":"/"}]
 
@@ -111,7 +111,7 @@
 		"code": "braintree",
 		"type":"creditcard",
 		"version":"",
-		"regions": ["US","CA","GB","AU","FI","DK","IE","NO","SE","AL","AD","AT","BY","BE","BG","HY","CY","CZ","FR","GR","IS","IE","IM","IT","PL","LU","CH","RS","SG","MY","HK","NZ"],
+		"regions": ["US","CA","GB","AU","FI","DK","IE","NO","SE","AL","AD","AT","BY","BE","BG","HY","CY","CZ","FR","GR","IS","IE","IM","IT","PL","LU","CH","RS","SG","MY","HK","NZ","MX"],
 		"image":"braintree.jpg",
 		"configuration":[{"env":"TEST","scheme":"https","host":"NOTREQUIRED","port":"NOTREQUIRED","uri":"NOTREQUIRED"},{"env":"PROD","scheme":"https","host":"NOTREQUIRED","port":"NOTREQUIRED","uri":"NOTREQUIRED"}]
 

@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 
@@ -65,32 +67,45 @@ public class DataConfiguration {
 
     @Bean
     public HikariDataSource dataSource() {
-    	HikariDataSource dataSource = DataSourceBuilder.create().type(HikariDataSource.class)
-    	.driverClassName(driverClassName)
-    	.url(url)
-    	.username(user)
-    	.password(password)
-    	.build();
-    	
-    	/** Datasource config **/
-    	dataSource.setIdleTimeout(minPoolSize);
-    	dataSource.setMaximumPoolSize(maxPoolSize);
-    	dataSource.setConnectionTestQuery(testQuery);
-    	
-    	return dataSource;
+
+        // The configuration object specifies behaviors for the connection pool.
+        HikariConfig config = new HikariConfig();
+
+        // Configure which instance and what database user to connect with.
+        config.setDriverClassName(driverClassName);
+        config.setJdbcUrl(url);
+        config.setUsername(user); // e.g. "root", "postgres"
+        config.setPassword(password); // e.g. "my-password"
+
+        // For Java users, the Cloud SQL JDBC Socket Factory can provide authenticated
+        // connections.
+        // See https://github.com/GoogleCloudPlatform/cloud-sql-jdbc-socket-factory for
+        // details.
+//        config.addDataSourceProperty("socketFactory", "com.google.cloud.sql.mysql.SocketFactory");
+//        config.addDataSourceProperty("cloudSqlInstance", "paradise-group:us-central1:paradise-corp");
+        config.addDataSourceProperty("autoReconnect", true);
+        config.addDataSourceProperty("useUnicode", true);
+        config.addDataSourceProperty("characterEncoding", "UTF-8");
+        config.addDataSourceProperty("useSSL", false);
+        config.setIdleTimeout(minPoolSize);
+        config.setMaximumPoolSize(maxPoolSize);
+        //config.setConnectionTestQuery(testQuery);
+
+        return new HikariDataSource(config);
     }
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
-		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		vendorAdapter.setGenerateDdl(true);
 
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-		factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setJpaVendorAdapter(vendorAdapter);
+        factory.setPersistenceProviderClass(HibernatePersistenceProvider.class);
 		factory.setPackagesToScan("com.salesmanager.core.model");
 		factory.setJpaProperties(additionalProperties());
-		factory.setDataSource(dataSource());
+        factory.setDataSource(dataSource());
 		return factory;
 	}
 	
@@ -101,14 +116,17 @@ public class DataConfiguration {
         hibernateProperties.setProperty("hibernate.default_schema", schema);
         hibernateProperties.setProperty("hibernate.dialect", dialect);
         hibernateProperties.setProperty("hibernate.show_sql", showSql);
-        hibernateProperties.setProperty("hibernate.cache.use_second_level_cache", "true");
         hibernateProperties.setProperty("hibernate.cache.use_query_cache", "true");
-        hibernateProperties.setProperty("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
+        hibernateProperties.setProperty("hibernate.cache.region.factory_class",
+                "org.hibernate.cache.ehcache.EhCacheRegionFactory");
         hibernateProperties.setProperty("hibernate.connection.CharSet", "utf8");
         hibernateProperties.setProperty("hibernate.connection.characterEncoding", "utf8");
         hibernateProperties.setProperty("hibernate.connection.useUnicode", "true");
         hibernateProperties.setProperty("hibernate.id.new_generator_mappings", "false");
-        // hibernateProperties.setProperty("hibernate.globally_quoted_identifiers", "true");
+        hibernateProperties.setProperty("hibernate.cache.ehcache.missing_cache_strategy", "create");
+        hibernateProperties.setProperty("hibernate.transaction.jta.platform", "org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform");
+        // hibernateProperties.setProperty("hibernate.globally_quoted_identifiers",
+        // "true");
         return hibernateProperties;
     }
 

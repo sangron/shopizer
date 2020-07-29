@@ -812,6 +812,9 @@ function calculateTotal(){
 			$('#totalRow').html(totalRendred);
 			formValid = isFormValid();
 			validateConfirmShipping(response);
+			if(formValid) {
+				$("#paypal-button-container").show();
+			}
 	  },
 	    error: function(xhr, textStatus, errorThrown) {
 	    	$('#pageContainer').hideLoading();
@@ -826,7 +829,7 @@ function calculateTotal(){
 $(document).ready(function() {
 	
 		$("#confirmShippingAddress").hide();
-	
+		$("#paypal-button-container").hide();
         formValid = false;	
 	
 		<!-- 
